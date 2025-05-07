@@ -53,3 +53,21 @@ Many applications attempt to load Dynamic Link Libraries (DLLs) without specifyi
 
 ## Disclaimer
 This tool is intended for security research, penetration testing, and educational purposes only. Use it responsibly and only on systems you have explicit permission to test. The creator is not responsible for any misuse or damage caused by this tool. Always ensure your payload DLLs are safe and intended for testing environments.
+
+## Antivirus / Windows Defender Warnings (False Positives)
+Please be aware: Due to the nature of this tool and the actions it performs, it is highly likely that Windows Defender or other antivirus/EDR solutions will flag the compiled executables (or even the Python scripts) as potentially malicious (e.g., Trojan, PUA - Potentially Unwanted Application, Generic Malware).
+
+### Why does this happen?
+* Antivirus software uses various detection methods, including:
+* Heuristics: The tool performs actions that, while legitimate for security testing and research in this context, are also common in actual malware:
+* Launching Processes: It programmatically starts Procmon64.exe and the target application being tested using subprocess.
+* Process Inspection: It uses libraries like psutil to list loaded DLLs in other processes and check parent-child relationships.
+* File Manipulation: It copies payload DLLs into application directories and later removes them (shutil, os.remove).
+* Potentially Suspicious Payloads: If using payloads that perform network callbacks (curl, reverse shells) or modify the system significantly, these actions themselves are inherently suspicious.
+* Packed Executables (if using --onefile with PyInstaller): Single-file executables created by PyInstaller work by unpacking themselves into a temporary location before running. This technique is also used by malware packers to hide malicious code, making AV engines suspicious of any such packer behavior. (Note: Even --onedir mode might trigger flags due to the bundled Python components or script behavior).
+* Lack of Code Signing: The executables are not digitally signed by a trusted Certificate Authority. Unsigned executables originating from the internet or unofficial sources are treated with higher suspicion by security software.
+* Low Reputation: As a specialized tool, it likely doesn't have the widespread use and established reputation that allows AVs to trust it automatically.
+
+### What to do if it's flagged:
+* Verify the Source: Ensure you downloaded the code/executable directly from this official GitHub repository or built it yourself from the source code provided here. Do not run executables from untrusted sources.
+* Submit as False Positive: If you believe the detection is incorrect, please submit the flagged file to your antivirus vendor for analysis (e.g., Microsoft Defender File Submission portal). This helps improve their detection accuracy.
