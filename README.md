@@ -19,6 +19,9 @@ Many applications attempt to load Dynamic Link Libraries (DLLs) without specifyi
 * Launches the target application to trigger the potential hijack.
 * Includes features for managing test execution, such as pausing, resuming, and stopping.
 
+![Alt text](https://raw.githubusercontent.com/crazywifi/Auto_DLL_Hijack_Suite_GUI/refs/heads/main/ProcmonAutoCaptureGUI.png)
+![Alt text](https://raw.githubusercontent.com/crazywifi/Auto_DLL_Hijack_Suite_GUI/refs/heads/main/DLL_HijackExploiterGUI.png)
+
 ## Problem Solved
 * This suite addresses the following challenges in DLL hijacking vulnerability research:
 * Time-Consuming Manual Analysis: Manually running Procmon, sifting through thousands of events, and identifying all "NAME NOT FOUND" DLLs for a target application is laborious.
